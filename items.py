@@ -81,7 +81,7 @@ files = {
             'scrape_configs': node.metadata.get('prometheus').get('scrape_configs'),
             'additional_scrape_config': yaml.dump(
                     node.metadata.get('prometheus').get('additional_scrape_configs')
-            ),
+            ) if node.metadata.get('prometheus').get('additional_scrape_configs') else "",
         },
         'owner': prom_user,
         'group': prom_group,
