@@ -12,11 +12,20 @@ defaults = {
         'whitelisted_ips': [],
         'scrape_configs': [
             # {
-            #    "job_name": "node",
+            #    "name": "node",
             #    "targets": ["127.0.0.1:9100"],
             # }
         ],
-        'additional_scrape_configs': [],
+        'additional_scrape_configs': [
+            # {
+            #     "job_name": "node",
+            #     "static_configs": [
+            #         {
+            #             "targets": ["127.0.0.1:9100"],
+            #         },
+            #     ],
+            # }
+        ],
     },
 }
 
