@@ -10,10 +10,16 @@ defaults = {
             'port': '9090',
         },
         'whitelisted_ips': [],
-        'scrape_configs': [],
+        'scrape_configs': [
+            # {
+            #    "job_name": "node",
+            #    "targets": ["127.0.0.1:9100"],
+            # }
+        ],
         'additional_scrape_configs': [],
     },
 }
+
 
 @metadata_reactor
 def add_iptables(metadata):
