@@ -64,7 +64,7 @@ actions = {
             'action:unpack_prometheus',
             f'symlink:{prom_dir}',
         ],
-        'unless': f'test $(stat -c "%U:%G" /etc/prometheus) = "{prom_user}:{prom_group}"'
+        'unless': f'test $(stat -c "%U:%G" {prom_dir_version}) = "{prom_user}:{prom_group}"'
     },
     'daemon_reload_prometheus': {
         'command': 'systemctl daemon-reload',
