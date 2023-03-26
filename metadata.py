@@ -2,6 +2,7 @@ defaults = {
     'prometheus': {
         'version': '2.43.0',
         'checksum_sha256': 'cfea92d07dfd9a9536d91dff6366d897f752b1068b9540b3e2669b0281bb8ebf',
+        'arch': 'amd64',
         'user': 'prometheus',
         'group': 'prometheus',
         'directory': '/opt/prometheus',

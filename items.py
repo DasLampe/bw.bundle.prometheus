@@ -4,10 +4,11 @@ global node
 
 version = node.metadata.get('prometheus').get('version')
 checksum = node.metadata.get('prometheus').get('checksum_sha256')
+arch = node.metadata.get('prometheus').get('arch')
 prom_dir = node.metadata.get('prometheus').get('directory')
 prom_user = node.metadata.get('prometheus').get('user')
 prom_group = node.metadata.get('prometheus').get('group')
-prom_dir_version = f'/opt/prometheus-{version}.linux-amd64'
+prom_dir_version = f'/opt/prometheus-{version}.linux-{arch}'
 
 groups = {
     prom_group: {},
@@ -42,9 +43,9 @@ directories = {
 }
 
 downloads = {
-    f'/tmp/prometheus-{version}.linux-amd64.tar.gz': {
+    f'/tmp/prometheus-{version}.linux-{arch}.tar.gz': {
         'url': 'https://github.com/prometheus/prometheus/releases/download/'
-               f'v{version}/prometheus-{version}.linux-amd64.tar.gz',
+               f'v{version}/prometheus-{version}.linux-{arch}.tar.gz',
         'sha256': checksum,
         'unless': f'test -f {prom_dir_version}/prometheus',
     },
@@ -52,9 +53,9 @@ downloads = {
 
 actions = {
     'unpack_prometheus': {
-        'command': f'tar xfvz /tmp/prometheus-{version}.linux-amd64.tar.gz -C /opt',
+        'command': f'tar xfvz /tmp/prometheus-{version}.linux-{arch}.tar.gz -C /opt',
         'needs': [
-            f'download:/tmp/prometheus-{version}.linux-amd64.tar.gz',
+            f'download:/tmp/prometheus-{version}.linux-{arch}.tar.gz',
         ],
         'unless': f'test -d {prom_dir}',
     },
