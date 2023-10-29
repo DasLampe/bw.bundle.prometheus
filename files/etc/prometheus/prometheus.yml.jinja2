@@ -11,9 +11,15 @@ scrape_configs:
 {% for config in scrape_configs %}
   - job_name: "{{ config.get('name') }}"
     static_configs:
+      {% for static_config in config.get('static_configs', []) %}
       - targets:
-        {% for target in config.get('targets') %}
+      {% for target in static_config.get('targets', []) %}
         - {{ target }}
-        {% endfor %}
+      {% endfor %}
+        labels:
+      {% for label, value in static_config.get('labels', []).items() -%}
+          {{ label  | indent(4, True) }}: {{ value }}
+      {% endfor -%}
+      {% endfor -%}
 {% endfor %}
 {{ additional_scrape_config | indent(2, True) }}
