@@ -1,6 +1,11 @@
 import yaml
 global node
 
+# See https://web.archive.org/web/20170903201521/https://pyyaml.org/ticket/64#comment:5
+class MyDumper(yaml.Dumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(MyDumper, self).increase_indent(flow, False)
+
 
 version = node.metadata.get('prometheus').get('version')
 checksum = node.metadata.get('prometheus').get('checksum_sha256')
@@ -81,7 +86,9 @@ files = {
             'http': node.metadata.get('prometheus').get('http'),
             'scrape_configs': node.metadata.get('prometheus').get('scrape_configs'),
             'additional_scrape_config': yaml.dump(
-                    node.metadata.get('prometheus').get('additional_scrape_configs')
+                    node.metadata.get('prometheus').get('additional_scrape_configs'),
+                Dumper=MyDumper,
+                default_flow_style=False
             ) if node.metadata.get('prometheus').get('additional_scrape_configs') else "",
         },
         'owner': prom_user,
