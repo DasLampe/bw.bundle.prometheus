@@ -14,6 +14,7 @@ defaults = {
         'http': {
             'addr': '127.0.0.1',
             'port': '9090',
+            'external_url': '',
         },
         'whitelisted_ips': [],
         'scrape_configs': [
@@ -39,6 +40,7 @@ defaults = {
             #     ],
             # }
         ],
+        'enable_remote-write': False,
     },
 }
 

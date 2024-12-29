@@ -6,13 +6,14 @@ class MyDumper(yaml.Dumper):
     def increase_indent(self, flow=False, indentless=False):
         return super(MyDumper, self).increase_indent(flow, False)
 
+cfg = node.metadata.get('prometheus')
 
-version = node.metadata.get('prometheus').get('version')
-checksum = node.metadata.get('prometheus').get('checksum_sha256')
-arch = node.metadata.get('prometheus').get('arch')
-prom_dir = node.metadata.get('prometheus').get('directory')
-prom_user = node.metadata.get('prometheus').get('user')
-prom_group = node.metadata.get('prometheus').get('group')
+version = cfg.get('version')
+checksum = cfg.get('checksum_sha256')
+arch = cfg.get('arch')
+prom_dir = cfg.get('directory')
+prom_user = cfg.get('user')
+prom_group = cfg.get('group')
 prom_dir_version = f'/opt/prometheus-{version}.linux-{arch}'
 
 groups = {
@@ -105,11 +106,13 @@ files = {
         'content_type': 'jinja2',
         'context': {
             'prom_dir': prom_dir,
-            'http': node.metadata.get('prometheus').get('http'),
+            'http': cfg.get('http'),
+            'cfg': cfg,
         },
         'triggers': [
             'action:daemon_reload_prometheus',
-        ]
+            'svc_systemd:prometheus:restart',
+        ],
     },
 }
 

@@ -14,8 +14,9 @@ ExecStart={{ prom_dir }}/prometheus \
   --storage.tsdb.path=/var/lib/prometheus \
   --web.console.templates={{ prom_dir }}/consoles \
   --web.console.libraries={{ prom_dir }}/console_libraries \
+  {{ '--web.enable-remote-write-receiver \\' if cfg.get('enable_remote-write') }}
   --web.listen-address={{ http.get('addr') }}:{{ http.get('port') }} \
-  --web.external-url=
+  --web.external-url={{ http.get('external_url', '') }}
 
 SyslogIdentifier=prometheus
 Restart=always
