@@ -54,6 +54,9 @@ downloads = {
                f'v{version}/prometheus-{version}.linux-{arch}.tar.gz',
         'sha256': checksum,
         'unless': f'test -f {prom_dir_version}/prometheus',
+        'triggers': [
+            'action:unpack_prometheus'
+        ]
     },
 }
 
@@ -63,7 +66,7 @@ actions = {
         'needs': [
             f'download:/tmp/prometheus-{version}.linux-{arch}.tar.gz',
         ],
-        'unless': f'test -d {prom_dir}',
+        'triggered': True,
     },
     'chown_prom_dir': {
         'command': f'chown -R {prom_user}:{prom_group} {prom_dir_version}',
