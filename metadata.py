@@ -5,8 +5,8 @@ global repo, node
 
 defaults = {
     'prometheus': {
-        'version': '2.43.0',
-        'checksum_sha256': 'cfea92d07dfd9a9536d91dff6366d897f752b1068b9540b3e2669b0281bb8ebf',
+        'version': '3.1.0',
+        'checksum_sha256': '9a9d1e115d1745826b13aec3f1409780b9fcf1d4206746cb4faee46ca5add70c',
         'arch': 'amd64',
         'user': 'prometheus',
         'group': 'prometheus',
